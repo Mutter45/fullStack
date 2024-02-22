@@ -1,15 +1,7 @@
-import {
-  Controller,
-  HttpStatus,
-  Req,
-  Res,
-  Get,
-  Post,
-  Body,
-} from '@nestjs/common';
+import { Controller, HttpStatus, Res, Get, Post, Body } from '@nestjs/common';
 import * as fs from 'node:fs/promises';
 import path = require('path');
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 
 export interface TodoData {
   id: number;
@@ -20,7 +12,7 @@ export interface TodoData {
 @Controller('todos')
 export class TodosController {
   @Get()
-  async findAll(@Req() request: Request, @Res() res: Response) {
+  async findAll(@Res() res: Response) {
     const listJson = await fs.readFile(
       path.join(__dirname, '../src/assets/data.json'),
       'utf-8',
@@ -28,6 +20,7 @@ export class TodosController {
     const list = JSON.parse(listJson) as TodoData[];
     res.status(HttpStatus.OK).json(list);
   }
+
   @Post()
   async addData(@Body('content') content: string, @Res() res: Response) {
     try {
