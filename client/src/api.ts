@@ -1,4 +1,4 @@
-import { TodoData } from "./TodoEvent";
+import { TodoData } from "./typing";
 import { http } from "./http";
 export const getList = async () => {
   return await http.get<TodoData[]>("/todos");
