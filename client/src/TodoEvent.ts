@@ -8,7 +8,7 @@ export interface TodoData {
 export class TodoEvent extends TodoDom {
   private static instance: TodoEvent;
   protected list: TodoData[] = [];
-  constructor(container: HTMLElement, list: TodoData[]) {
+  constructor(container: HTMLElement) {
     super(container);
     this.initData();
   }
@@ -44,9 +44,9 @@ export class TodoEvent extends TodoDom {
     });
     this.changeItemComplete(id);
   }
-  public static create(container: HTMLElement, list: TodoData[]) {
+  public static create(container: HTMLElement) {
     if (!this.instance) {
-      this.instance = new TodoEvent(container, list);
+      this.instance = new TodoEvent(container);
     }
     return this.instance;
   }

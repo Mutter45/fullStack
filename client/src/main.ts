@@ -3,29 +3,12 @@ import { TodoData, TodoEvent } from "./TodoEvent";
   const todoContainer: HTMLElement = document.querySelector(".todo-container");
   const todoInput: HTMLInputElement = document.querySelector(".todo-input");
   const addTodo: HTMLElement = document.querySelector(".add-todo");
-  const list: TodoData[] = [
-    {
-      id: 1,
-      content: "吃饭",
-      complete: false,
-    },
-    {
-      id: 2,
-      content: "睡觉",
-      complete: false,
-    },
-    {
-      id: 3,
-      content: "打豆豆",
-      complete: true,
-    },
-  ];
   /**
    * addItem
    * removeItem
    * changeItemComplete
    */
-  const todoEvent = TodoEvent.create(todoContainer, list);
+  const todoEvent = TodoEvent.create(todoContainer);
   function init() {
     bindEvents();
   }
