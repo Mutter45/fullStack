@@ -1,4 +1,5 @@
-import { TodoData, TodoEvent } from "./TodoEvent";
+import { TodoEvent } from "./TodoEvent";
+import { TodoData } from "./typing";
 ((document) => {
   const todoContainer: HTMLElement = document.querySelector(".todo-container");
   const todoInput: HTMLInputElement = document.querySelector(".todo-input");

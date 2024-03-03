@@ -20,17 +20,17 @@ export interface TodoData {
 import path = require('path');
 @Controller('todos')
 export class TodosController {
-  getPath() {
+  private getPath() {
     return path.join(__dirname, '../src/assets/data.json');
   }
   @Get()
-  async findAll(@Res() res: Response) {
+  public async findAll(@Res() res: Response) {
     const list = await operate<TodoData>(this.getPath());
     res.status(HttpStatus.OK).json(list);
   }
 
   @Post()
-  async addData(@Body('content') content: string, @Res() res: Response) {
+  public async addData(@Body('content') content: string, @Res() res: Response) {
     try {
       const item = {
         id: Date.now(),
@@ -47,7 +47,7 @@ export class TodosController {
     }
   }
   @Delete(':id')
-  async deleteData(@Param('id') id: string, @Res() res: Response) {
+  public async deleteData(@Param('id') id: string, @Res() res: Response) {
     try {
       await operate<TodoData>(this.getPath(), (list) =>
         list.filter((item) => item.id !== Number(id)),
@@ -58,7 +58,7 @@ export class TodosController {
     }
   }
   @Put(':id')
-  async updateData(@Param('id') id: string, @Res() res: Response) {
+  public async updateData(@Param('id') id: string, @Res() res: Response) {
     try {
       await operate<TodoData>(this.getPath(), (list) =>
         list.map((item) => {

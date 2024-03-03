@@ -1,10 +1,7 @@
 import { TodoDom } from "./TodoDom";
+import { TodoData } from "./typing";
 import { getAll, addData, removeData, updateData } from "./utils";
-export interface TodoData {
-  id: number;
-  content: string;
-  complete: boolean;
-}
+
 export class TodoEvent extends TodoDom {
   private static instance: TodoEvent;
   protected list: TodoData[] = [];

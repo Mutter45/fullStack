@@ -1,14 +1,14 @@
 import { TodoData } from "./TodoEvent";
 import { http } from "./http";
 export const getList = async () => {
-  return await http.get("/todos");
+  return await http.get<TodoData[]>("/todos");
 };
 export const addTodo = async (data: Pick<TodoData, "content">) => {
-  return await http.post("/todos", data);
+  return await http.post<TodoData>("/todos", data);
 };
 export const removeTodo = async (id: number) => {
-  return await http.delete(`/todos/${id}`);
+  return await http.delete<{ id: string }>(`/todos/${id}`);
 };
 export const updateTodo = async (id: number) => {
-  return await http.put(`/todos/${id}`);
+  return await http.put<{ id: string }>(`/todos/${id}`);
 };

@@ -1,4 +1,4 @@
-import { TodoData } from "./TodoEvent";
+import { TodoData } from "./typing";
 import { getList, addTodo, removeTodo, updateTodo } from "./api";
 export const getAll = (
   /**当前装饰的函数的类容器 */

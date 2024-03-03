@@ -1,4 +1,4 @@
-import { TodoData } from "./TodoEvent";
+import { TodoData } from "./typing";
 import { createTodoItem } from "./template";
 export class TodoDom {
   private container: HTMLElement;
