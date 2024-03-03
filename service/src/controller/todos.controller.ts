@@ -1,6 +1,15 @@
-import { Controller, HttpStatus, Res, Get, Post, Body } from '@nestjs/common';
-import * as fs from 'node:fs/promises';
-import path = require('path');
+import {
+  Controller,
+  HttpStatus,
+  Res,
+  Get,
+  Post,
+  Delete,
+  Put,
+  Body,
+  Param,
+} from '@nestjs/common';
+import operate from '../utils/operate';
 import type { Response } from 'express';
 
 export interface TodoData {
@@ -8,39 +17,58 @@ export interface TodoData {
   content: string;
   complete: boolean;
 }
-
+import path = require('path');
 @Controller('todos')
 export class TodosController {
+  getPath() {
+    return path.join(__dirname, '../src/assets/data.json');
+  }
   @Get()
   async findAll(@Res() res: Response) {
-    const listJson = await fs.readFile(
-      path.join(__dirname, '../src/assets/data.json'),
-      'utf-8',
-    );
-    const list = JSON.parse(listJson) as TodoData[];
+    const list = await operate<TodoData>(this.getPath());
     res.status(HttpStatus.OK).json(list);
   }
 
   @Post()
   async addData(@Body('content') content: string, @Res() res: Response) {
     try {
-      const listJson = await fs.readFile(
-        path.join(__dirname, '../src/assets/data.json'),
-        'utf-8',
-      );
-      const list = JSON.parse(listJson) as TodoData[];
       const item = {
         id: Date.now(),
         content: content,
         complete: false,
       };
-      list.push(item);
-      await fs.writeFile(
-        path.join(__dirname, '../src/assets/data.json'),
-        JSON.stringify(list),
-        'utf-8',
-      );
+      await operate<TodoData>(this.getPath(), (list) => {
+        list.push(item);
+        return list;
+      });
       res.status(HttpStatus.OK).json(item);
+    } catch {
+      res.status(HttpStatus.BAD_REQUEST).send('添加失败');
+    }
+  }
+  @Delete(':id')
+  async deleteData(@Param('id') id: string, @Res() res: Response) {
+    try {
+      await operate<TodoData>(this.getPath(), (list) =>
+        list.filter((item) => item.id !== Number(id)),
+      );
+      res.status(HttpStatus.OK).json({ id });
+    } catch {
+      res.status(HttpStatus.BAD_REQUEST).send('添加失败');
+    }
+  }
+  @Put(':id')
+  async updateData(@Param('id') id: string, @Res() res: Response) {
+    try {
+      await operate<TodoData>(this.getPath(), (list) =>
+        list.map((item) => {
+          if (item.id === Number(id)) {
+            item.complete = !item.complete;
+          }
+          return item;
+        }),
+      );
+      res.status(HttpStatus.OK).json({ id });
     } catch {
       res.status(HttpStatus.BAD_REQUEST).send('添加失败');
     }

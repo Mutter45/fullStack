@@ -1,5 +1,5 @@
 import { TodoDom } from "./TodoDom";
-import { getAll, addData } from "./utils";
+import { getAll, addData, removeData, updateData } from "./utils";
 export interface TodoData {
   id: number;
   content: string;
@@ -29,16 +29,16 @@ export class TodoEvent extends TodoDom {
     this.list.push(data);
     this.addItem(data);
   }
+  @removeData
   public removeData(id: number) {
     this.list = this.list.filter((item) => item.id !== id);
     this.removeItem(id);
   }
+  @updateData
   public changeDataComplete(id: number) {
-    let complete = false;
     this.list = this.list.map((item) => {
       if (item.id === id) {
         item.complete = !item.complete;
-        complete = item.complete;
       }
       return item;
     });

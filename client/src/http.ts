@@ -5,7 +5,7 @@ const baseConfig = {
   },
 };
 const useFetch = (url: string, config: RequestInit) =>
-  fetch(`${baseUrl}${url}`, { ...config, ...baseConfig })
+  fetch(`${baseUrl + url}`, { ...config, ...baseConfig })
     .then((res) => {
       if (res.status === 400) {
         alert("请求错误");
@@ -25,6 +25,10 @@ const useFetch = (url: string, config: RequestInit) =>
     });
 export const http = {
   get: (url: string) => useFetch(url, { method: "GET" }),
-  post: (url: string, data: any) =>
+  post: (url: string, data: any = {}) =>
     useFetch(url, { method: "POST", body: JSON.stringify(data) }),
+  delete: (url: string, data: any = {}) =>
+    useFetch(url, { method: "DELETE", body: JSON.stringify(data) }),
+  put: (url: string, data: any = {}) =>
+    useFetch(url, { method: "PUT", body: JSON.stringify(data) }),
 };
