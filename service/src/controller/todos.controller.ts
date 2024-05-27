@@ -11,17 +11,16 @@ import {
 } from '@nestjs/common';
 import operate from '../utils/operate';
 import type { Response } from 'express';
-
+import { join } from 'node:path';
 export interface TodoData {
   id: number;
   content: string;
   complete: boolean;
 }
-import path = require('path');
 @Controller('todos')
 export class TodosController {
   private getPath() {
-    return path.join(__dirname, '../src/assets/data.json');
+    return join(__dirname, '../src/assets/data.json');
   }
   @Get()
   public async findAll(@Res() res: Response) {

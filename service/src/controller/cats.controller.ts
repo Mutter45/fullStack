@@ -29,7 +29,6 @@ export class CatsController {
 
   @Get()
   findAll(@Req() request: Request, @Res() res: Response) {
-    console.log(request);
     res.status(HttpStatus.OK).json([
       {
         id: 1,
