@@ -4,7 +4,7 @@ export const getList = async () => {
   return await http.get<TodoData[]>('/todos');
 };
 export const addTodo = async (data: Pick<TodoData, 'content'>) => {
-  return await http.post<TodoData>('/todos', data);
+  return await http.post<TodoData, Pick<TodoData, 'content'>>('/todos', data);
 };
 export const removeTodo = async (id: number) => {
   return await http.delete<{ id: string }>(`/todos/${id}`);

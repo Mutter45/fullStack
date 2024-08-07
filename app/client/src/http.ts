@@ -1,4 +1,4 @@
-interface Result<T> {
+export interface Result<T> {
   data: T;
   error: boolean;
   message: string;
@@ -33,20 +33,32 @@ export const useFetch = <T>(
     });
 export const http = {
   get: <T>(url: string) => useFetch<T>(url, { method: 'GET' }),
-  post: <T>(url: string, data: any = {}, config: RequestInit = baseConfig) => {
+  post: <T, U extends object = any>(
+    url: string,
+    data: U = {} as U,
+    config: RequestInit = baseConfig,
+  ) => {
     return useFetch<T>(url, {
       method: 'POST',
       body: JSON.stringify(data),
       ...config,
     });
   },
-  delete: <T>(url: string, data: any = {}, config: RequestInit = baseConfig) =>
+  delete: <T, U extends object = any>(
+    url: string,
+    data: U = {} as U,
+    config: RequestInit = baseConfig,
+  ) =>
     useFetch<T>(url, {
       method: 'DELETE',
       body: JSON.stringify(data),
       ...config,
     }),
-  put: <T>(url: string, data: any = {}, config: RequestInit = baseConfig) =>
+  put: <T, U extends object = any>(
+    url: string,
+    data: U = {} as U,
+    config: RequestInit = baseConfig,
+  ) =>
     useFetch<T>(url, {
       method: 'PUT',
       body: JSON.stringify(data),
