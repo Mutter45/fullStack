@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>todo</title>
+    <style>
+      .completed {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div>
+        <input type="text" placeholder="请输入待办事项" class="todo-input" />
+        <button class="add-todo">添加</button>
+      </div>
+      <div class="todo-container" style="margin-top: 20px">
+        <div class="todo-list"></div>
+      </div>
+    </div>
+    <script type="module" src="./src/todo/main.ts"></script>
+  </body>
+</html>
